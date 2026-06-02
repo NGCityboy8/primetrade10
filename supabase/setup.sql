@@ -1,0 +1,5 @@
+-- Run the complete setup in Supabase SQL Editor:
+--
+--   supabase/full_setup.sql
+--
+-- Login after setup:  username = admin   password = admin

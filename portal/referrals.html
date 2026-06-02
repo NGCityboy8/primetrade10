@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Referrals | Prime Trade Capitals</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" />
+  <link href="../css/theme.css" rel="stylesheet" />
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" rel="stylesheet" />
+  <script>
+(function(){var k="ptc-theme",s=localStorage.getItem(k),m=window.matchMedia("(prefers-color-scheme: light)").matches,t=s||(m?"light":"dark");document.documentElement.setAttribute("data-theme",t),document.documentElement.style.colorScheme=t})();
+  </script>
+  <link href="../css/portal.css" rel="stylesheet" />
+  <link href="../css/responsive.css" rel="stylesheet" />
+  <link href="../css/premium.css" rel="stylesheet" />
+</head>
+<body class="portal-app" data-portal-page="referrals" data-portal-title="Referrals" data-portal-subtitle="Invite others to join the Prime Trade Capitals community.">
+  <a href="#main" class="skip-link">Skip to content</a>
+  <div class="portal-app-layout">
+    <div id="portal-sidebar"></div>
+    <div class="portal-content">
+      <div id="portal-topbar"></div>
+      <main class="portal-main" id="main">
+        <div class="row g-4">
+          <div class="col-lg-8">
+            <div class="portal-card mb-4">
+              <h3>Share Your Referral Link</h3>
+              <p class="text-muted-ptc small">Share your unique referral link with friends and earn rewards when they join:</p>
+              <div class="referral-link-row">
+                <input type="text" id="referral-link-input" readonly aria-label="Referral link" />
+                <button type="button" class="btn btn-gradient" id="copy-referral-link">Copy</button>
+              </div>
+              <div class="referral-meta-grid">
+                <div class="referral-meta-box">
+                  <div class="label">Your Referral ID</div>
+                  <div class="value">
+                    <span id="referral-id-display">—</span>
+                    <button type="button" class="btn btn-sm btn-outline-light-ptc py-0 px-2" id="copy-referral-id" aria-label="Copy referral ID"><i class="bi bi-clipboard"></i></button>
+                  </div>
+                </div>
+                <div class="referral-meta-box">
+                  <div class="label">Your Sponsor</div>
+                  <div class="value"><i class="bi bi-person me-1 text-muted-ptc"></i><span id="referral-sponsor">—</span></div>
+                </div>
+              </div>
+            </div>
+
+            <div class="portal-card">
+              <h3>How Referrals Work</h3>
+              <div class="referral-steps">
+                <div class="referral-step">
+                  <i class="bi bi-link-45deg d-block"></i>
+                  <h4>Share Your Link</h4>
+                  <p>Send your unique referral link to friends.</p>
+                </div>
+                <div class="referral-step">
+                  <i class="bi bi-person-plus d-block"></i>
+                  <h4>Friends Sign Up</h4>
+                  <p>They register and become your referral.</p>
+                </div>
+                <div class="referral-step">
+                  <i class="bi bi-gift d-block"></i>
+                  <h4>Earn Rewards</h4>
+                  <p>Receive benefits when they invest.</p>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="col-lg-4">
+            <div class="portal-card mb-4">
+              <h3>Referral Statistics</h3>
+              <div class="mb-4">
+                <div class="stat-label">Total Referrals</div>
+                <div class="stat-value fs-4" id="ref-total-count">0 Users</div>
+              </div>
+              <div>
+                <div class="stat-label">Referral Earnings</div>
+                <div class="stat-value fs-4" id="ref-total-earnings">$0.00</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="portal-card mt-2">
+          <h3>Your Referrals</h3>
+          <div class="table-responsive">
+            <table class="table-portal">
+              <thead>
+                <tr>
+                  <th>Client Name</th>
+                  <th>Ref. Level</th>
+                  <th>Parent</th>
+                  <th>Client Status</th>
+                  <th>Date Registered</th>
+                </tr>
+              </thead>
+              <tbody id="referrals-table-body">
+                <tr><td colspan="5" class="text-muted-ptc">No referrals yet.</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </main>
+      <p class="portal-copyright mb-0">All Rights Reserved © Prime Trade Capitals 2026</p>
+    </div>
+  </div>
+  <button type="button" class="portal-chat-fab" aria-label="Chat"><i class="bi bi-chat-dots-fill"></i><span class="chat-badge">1</span></button>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="../js/theme.js"></script>
+  <script src="../js/config.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="../js/supabase.js"></script>
+  <script src="../js/auth-store.js"></script>
+  <script src="../js/auth.js"></script>
+  <script src="../js/components.js"></script>
+  <script src="../js/portal-shell.js"></script>
+  <script src="../js/portal.js"></script>
+</body>
+</html>

@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>KYC Verification | Prime Trade Capitals</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" />
+  <link href="../css/theme.css" rel="stylesheet" />
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" rel="stylesheet" />
+  <script>
+(function(){var k="ptc-theme",s=localStorage.getItem(k),m=window.matchMedia("(prefers-color-scheme: light)").matches,t=s||(m?"light":"dark");document.documentElement.setAttribute("data-theme",t),document.documentElement.style.colorScheme=t})();
+  </script>
+  <link href="../css/portal.css" rel="stylesheet" />
+  <link href="../css/responsive.css" rel="stylesheet" />
+  <link href="../css/premium.css" rel="stylesheet" />
+</head>
+<body class="portal-app portal-kyc-page" data-portal-page="kyc" data-portal-title="KYC Verification" data-portal-subtitle="">
+  <a href="#main" class="skip-link">Skip to content</a>
+  <div class="portal-app-layout">
+    <div id="portal-sidebar"></div>
+    <div class="portal-content">
+      <div id="portal-topbar"></div>
+      <main class="portal-main kyc-main" id="main">
+        <header class="kyc-hero">
+          <div class="kyc-hero-text">
+            <h2 class="kyc-title"><i class="bi bi-shield-check" aria-hidden="true"></i> KYC Verification</h2>
+            <p class="kyc-subtitle">Verify your identity to unlock deposits, withdrawals, and all investment features.</p>
+          </div>
+        </header>
+
+        <div class="kyc-status-banner kyc-page-status d-none" id="kyc-status-banner" role="status"></div>
+
+        <div class="kyc-steps" aria-label="Verification progress">
+          <div class="kyc-step" data-kyc-step="upload">
+            <span class="kyc-step-num">1</span>
+            <span class="kyc-step-label">Upload</span>
+          </div>
+          <div class="kyc-step-line" aria-hidden="true"></div>
+          <div class="kyc-step" data-kyc-step="review">
+            <span class="kyc-step-num">2</span>
+            <span class="kyc-step-label">Review</span>
+          </div>
+          <div class="kyc-step-line" aria-hidden="true"></div>
+          <div class="kyc-step" data-kyc-step="approved">
+            <span class="kyc-step-num">3</span>
+            <span class="kyc-step-label">Verified</span>
+          </div>
+        </div>
+
+        <div class="row g-4 kyc-layout">
+          <div class="col-lg-5">
+            <div class="portal-card kyc-section-card">
+              <h3 class="kyc-section-title"><i class="bi bi-list-check" aria-hidden="true"></i> Required Documents</h3>
+              <p class="kyc-section-desc">Submit clear, color copies. Files must be under 10 MB (JPG, PNG, or PDF).</p>
+              <ul class="kyc-requirements" id="kyc-requirements">
+                <li class="kyc-req-item" data-req="identity">
+                  <span class="kyc-req-icon" aria-hidden="true"><i class="bi bi-person-vcard"></i></span>
+                  <div>
+                    <strong>Government-issued ID</strong>
+                    <span class="kyc-req-hint">Passport or National ID</span>
+                  </div>
+                  <span class="kyc-req-status" id="kyc-req-identity">—</span>
+                </li>
+                <li class="kyc-req-item" data-req="address">
+                  <span class="kyc-req-icon" aria-hidden="true"><i class="bi bi-house"></i></span>
+                  <div>
+                    <strong>Proof of Address</strong>
+                    <span class="kyc-req-hint">Utility bill or bank statement (last 3 months)</span>
+                  </div>
+                  <span class="kyc-req-status" id="kyc-req-address">—</span>
+                </li>
+              </ul>
+
+              <div class="kyc-benefits">
+                <h4 class="kyc-benefits-title">When verified, you can:</h4>
+                <ul>
+                  <li><i class="bi bi-check2"></i> Deposit and withdraw funds</li>
+                  <li><i class="bi bi-check2"></i> Subscribe to investment plans</li>
+                  <li><i class="bi bi-check2"></i> Trade stocks, copy trading &amp; AI bots</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+
+          <div class="col-lg-7">
+            <div class="portal-card kyc-section-card" id="kyc-upload-card">
+              <h3 class="kyc-section-title"><i class="bi bi-cloud-upload" aria-hidden="true"></i> Upload Document</h3>
+              <p class="kyc-section-desc">Select document type and upload a legible file for compliance review.</p>
+              <form id="kyc-form" novalidate>
+                <div id="kyc-form-alert" class="alert-ptc d-none mb-3" role="status"></div>
+                <div class="mb-3">
+                  <label class="form-label-ptc" for="kyc-doc-type">Document Type</label>
+                  <select id="kyc-doc-type" name="document_type" class="form-select form-control-ptc" required>
+                    <option value="passport">Passport</option>
+                    <option value="id_card">National ID Card</option>
+                    <option value="proof_of_address">Proof of Address</option>
+                    <option value="selfie">Selfie with ID</option>
+                  </select>
+                </div>
+                <div class="mb-3">
+                  <label class="form-label-ptc" for="kyc-doc-file">File</label>
+                  <div class="kyc-file-drop" id="kyc-file-drop">
+                    <input type="file" id="kyc-doc-file" name="document" class="kyc-file-input" accept="image/jpeg,image/png,image/webp,application/pdf" required />
+                    <div class="kyc-file-placeholder" id="kyc-file-placeholder">
+                      <i class="bi bi-cloud-arrow-up" aria-hidden="true"></i>
+                      <span>Click or drag a file here</span>
+                      <span class="kyc-file-hint">JPG, PNG, WEBP or PDF · Max 10 MB</span>
+                    </div>
+                    <div class="kyc-file-selected d-none" id="kyc-file-selected">
+                      <i class="bi bi-file-earmark-check" aria-hidden="true"></i>
+                      <span id="kyc-file-name">—</span>
+                      <button type="button" class="kyc-file-clear" id="kyc-file-clear" aria-label="Remove file">&times;</button>
+                    </div>
+                  </div>
+                </div>
+                <button type="submit" class="btn btn-gradient" id="kyc-submit-btn">
+                  <i class="bi bi-upload" aria-hidden="true"></i> Submit for Review
+                </button>
+              </form>
+            </div>
+
+            <div class="portal-card kyc-section-card d-none" id="kyc-approved-card">
+              <div class="kyc-approved-state">
+                <span class="kyc-approved-icon" aria-hidden="true"><i class="bi bi-patch-check-fill"></i></span>
+                <h3>You're verified</h3>
+                <p>Your identity has been approved. All platform features are available on your account.</p>
+                <a href="deposit.html" class="btn btn-gradient btn-sm">Fund Account</a>
+                <a href="investments.html" class="btn btn-outline-light-ptc btn-sm">My Investments</a>
+              </div>
+            </div>
+
+            <div class="portal-card kyc-section-card">
+              <h3 class="kyc-section-title"><i class="bi bi-folder2-open" aria-hidden="true"></i> Submitted Documents</h3>
+              <div class="kyc-table-head" aria-hidden="true">
+                <span>Document</span>
+                <span>File</span>
+                <span>Status</span>
+                <span>Date</span>
+              </div>
+              <div class="kyc-docs-panel">
+                <div class="kyc-table-body" id="kyc-docs-rows"></div>
+                <div class="kyc-docs-empty" id="kyc-docs-empty">
+                  <i class="bi bi-inbox" aria-hidden="true"></i>
+                  <p>No documents submitted yet</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </main>
+      <p class="portal-copyright mb-0">All Rights Reserved © Prime Trade Capitals 2026</p>
+    </div>
+  </div>
+  <button type="button" class="portal-chat-fab" aria-label="Chat"><i class="bi bi-chat-dots-fill"></i><span class="chat-badge">1</span></button>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="../js/theme.js"></script>
+  <script src="../js/config.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="../js/supabase.js"></script>
+  <script src="../js/auth-store.js"></script>
+  <script src="../js/auth.js"></script>
+  <script src="../js/components.js"></script>
+  <script src="../js/portal-shell.js"></script>
+  <script src="../js/portal.js"></script>
+  <script src="../js/kyc-page.js"></script>
+</body>
+</html>

@@ -1,0 +1,577 @@
+/**
+ * Prime Trade Capitals — global responsive overrides
+ * Loaded via theme.css on all pages (public, auth, portal).
+ */
+
+/* —— Base —— */
+html {
+  -webkit-text-size-adjust: 100%;
+}
+
+img,
+video,
+svg {
+  max-width: 100%;
+  height: auto;
+}
+
+.container {
+  padding-left: max(0.75rem, env(safe-area-inset-left, 0px));
+  padding-right: max(0.75rem, env(safe-area-inset-right, 0px));
+}
+
+/* —— Public site navbar —— */
+@media (max-width: 991.98px) {
+  .navbar-ptc .navbar-collapse {
+    padding: 0.75rem 0 1rem;
+    margin-top: 0.5rem;
+    border-top: 1px solid var(--ptc-border);
+  }
+
+  .navbar-ptc .navbar-nav {
+    gap: 0.15rem;
+  }
+
+  .navbar-ptc .navbar-collapse .d-flex {
+    flex-wrap: wrap;
+    width: 100%;
+    padding-top: 0.75rem;
+    margin-top: 0.5rem;
+    border-top: 1px solid var(--ptc-border);
+    justify-content: flex-start;
+  }
+
+  .navbar-ptc .dropdown-menu {
+    background: var(--stat-card-bg, var(--ptc-card));
+    border-color: var(--ptc-border);
+  }
+}
+
+@media (max-width: 575.98px) {
+  .navbar-brand {
+    max-width: calc(100% - 3.5rem);
+  }
+
+  .hero-section {
+    padding: 4.5rem 0 2.5rem;
+    min-height: auto;
+  }
+
+  .hero-title {
+    font-size: clamp(1.65rem, 7vw, 2.25rem);
+  }
+
+  .hero-subtitle {
+    font-size: 1rem;
+  }
+
+  .page-hero {
+    padding: 4rem 0 2rem;
+  }
+
+  .page-hero h1 {
+    font-size: clamp(1.5rem, 6vw, 2rem);
+  }
+
+  .section-heading-wrap {
+    margin-bottom: 1.5rem;
+  }
+
+  .auth-wrapper {
+    padding: 1.5rem 0.75rem;
+    min-height: calc(100vh - 72px);
+  }
+
+  .auth-card {
+    padding: 1.5rem 1.25rem;
+    border-radius: 16px;
+  }
+
+  .footer-ptc {
+    text-align: center;
+  }
+
+  .footer-ptc .row > [class*='col-'] {
+    margin-bottom: 0.5rem;
+  }
+
+  .tv-tape-bar {
+    overflow: hidden;
+  }
+
+  .tv-widget-wrap.tv-h-520,
+  .tv-widget-wrap.tv-h-560,
+  .tv-widget-wrap.tv-h-600 {
+    height: 360px;
+    min-height: 360px;
+  }
+
+  .tv-widget-wrap.tv-mq-6 {
+    height: 320px;
+    min-height: 320px;
+  }
+
+  .tv-widget-wrap.tv-mq-8 {
+    height: 400px;
+    min-height: 400px;
+  }
+}
+
+/* Content / marketing */
+@media (max-width: 767.98px) {
+  .step-card,
+  .feature-card,
+  .pricing-card {
+    margin-bottom: 0.5rem;
+  }
+}
+
+/* —— Portal shell (mobile drawer) —— */
+.portal-menu-btn {
+  display: none;
+  flex-shrink: 0;
+  width: 42px;
+  height: 42px;
+  padding: 0;
+  align-items: center;
+  justify-content: center;
+  border-radius: 10px;
+  border: 1px solid var(--ptc-border);
+  background: var(--stat-card-bg);
+  color: var(--ptc-text);
+  font-size: 1.35rem;
+  cursor: pointer;
+  transition: background 0.15s, border-color 0.15s;
+}
+
+.portal-menu-btn:hover {
+  background: rgba(30, 136, 229, 0.12);
+  border-color: rgba(30, 136, 229, 0.4);
+}
+
+.portal-sidebar-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 1040;
+  background: rgba(0, 0, 0, 0.55);
+  backdrop-filter: blur(2px);
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+  transition: opacity 0.25s ease, visibility 0.25s ease;
+}
+
+body.portal-nav-open .portal-sidebar-overlay {
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
+}
+
+@media (max-width: 991.98px) {
+  .portal-menu-btn {
+    display: inline-flex;
+  }
+
+  .portal-app-layout {
+    display: block;
+  }
+
+  #portal-sidebar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    z-index: 1050;
+    width: min(300px, 88vw);
+    max-width: 100%;
+    transform: translateX(-100%);
+    transition: transform 0.28s cubic-bezier(0.4, 0, 0.2, 1);
+    will-change: transform;
+  }
+
+  body.portal-nav-open #portal-sidebar {
+    transform: translateX(0);
+    box-shadow: 8px 0 40px rgba(0, 0, 0, 0.45);
+  }
+
+  #portal-sidebar .portal-sidebar {
+    width: 100%;
+    height: 100%;
+    max-height: 100dvh;
+    border-right: none;
+    padding-top: max(1rem, env(safe-area-inset-top, 0px));
+    padding-bottom: max(1rem, env(safe-area-inset-bottom, 0px));
+  }
+
+  #portal-sidebar .portal-nav {
+    display: block;
+    flex-wrap: nowrap;
+  }
+
+  .portal-content {
+    width: 100%;
+    min-height: 100vh;
+    min-height: 100dvh;
+  }
+
+  .portal-topbar {
+    padding: 0.85rem 1rem 0.65rem;
+    padding-left: max(1rem, env(safe-area-inset-left, 0px));
+    padding-right: max(1rem, env(safe-area-inset-right, 0px));
+    align-items: center;
+    gap: 0.65rem;
+  }
+
+  .portal-topbar-lead {
+    flex: 1;
+    min-width: 0;
+  }
+
+  .portal-page-title {
+    font-size: 1.1rem;
+    line-height: 1.25;
+  }
+
+  .portal-page-subtitle {
+    font-size: 0.8rem;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+
+  .portal-topbar-actions {
+    flex-shrink: 0;
+    gap: 0.5rem;
+  }
+
+  .portal-user-btn {
+    padding: 0.4rem 0.65rem;
+    font-size: 0.85rem;
+    max-width: 7rem;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  .portal-main {
+    padding: 1rem max(1rem, env(safe-area-inset-right, 0px)) 2.5rem max(1rem, env(safe-area-inset-left, 0px));
+  }
+
+  .portal-copyright {
+    padding: 0.85rem 1rem 1.25rem;
+    font-size: 0.72rem;
+  }
+
+  .portal-chat-fab {
+    right: max(1rem, env(safe-area-inset-right, 0px));
+    bottom: max(1rem, env(safe-area-inset-bottom, 0px));
+    width: 50px;
+    height: 50px;
+    font-size: 1.35rem;
+  }
+
+  body.portal-nav-open {
+    overflow: hidden;
+    touch-action: none;
+  }
+
+  .referral-steps {
+    grid-template-columns: 1fr;
+  }
+
+  .referral-meta-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .referral-link-row {
+    flex-direction: column;
+  }
+
+  .referral-link-row .btn {
+    width: 100%;
+  }
+
+  .dash-overview {
+    grid-template-columns: 1fr;
+  }
+
+  .dash-layout-main {
+    grid-template-columns: 1fr;
+  }
+
+  .dash-metrics-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .dash-hero {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .dash-status-pill {
+    align-self: flex-start;
+  }
+
+  .quick-action-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .portal-card {
+    padding: 1.1rem 1rem;
+  }
+
+  .stat-card {
+    padding: 1rem;
+  }
+
+  .stat-card .stat-value {
+    font-size: 1.35rem;
+  }
+}
+
+@media (max-width: 575.98px) {
+  .dash-metrics-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .dash-assets-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .quick-action-grid {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .portal-page-subtitle:empty {
+    display: none;
+  }
+
+  /* Page heroes */
+  .wallet-hero,
+  .fund-hero,
+  .copy-hero,
+  .stocks-hero,
+  .tx-hero,
+  .ai-hero,
+  .inv-hero,
+  .prof-hero,
+  .kyc-hero,
+  .roi-hero,
+  .wd-hero,
+  .referral-hero {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .wallet-balance-pill,
+  .fund-balance-pill,
+  .copy-balance-pill,
+  .stocks-balance-pill,
+  .tx-balance-pill,
+  .ai-balance-pill,
+  .inv-balance-pill {
+    width: 100%;
+    justify-content: flex-start;
+  }
+
+  .wallet-title,
+  .fund-title,
+  .copy-title,
+  .stocks-title,
+  .tx-title,
+  .ai-title,
+  .inv-title,
+  .roi-title {
+    font-size: 1.25rem;
+  }
+
+  /* Connected wallet / provider rows */
+  .wallet-connected-item {
+    flex-wrap: wrap;
+  }
+
+  .wallet-connected-actions {
+    flex-direction: row;
+    width: 100%;
+    justify-content: flex-end;
+    margin-top: 0.35rem;
+  }
+
+  .wallet-form-actions {
+    flex-direction: column;
+  }
+
+  .wallet-form-actions .btn {
+    width: 100%;
+  }
+
+  .wallet-quick-links {
+    flex-direction: column;
+  }
+
+  .wallet-quick-links .btn {
+    width: 100%;
+  }
+
+  /* Fund / withdraw */
+  .fund-layout,
+  .wd-layout {
+    gap: 1rem;
+  }
+
+  .fund-method-row,
+  .fund-methods-head {
+    font-size: 0.82rem;
+  }
+
+  /* Stocks */
+  .stocks-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .stock-card-actions {
+    flex-direction: column;
+  }
+
+  .stock-card-actions .btn {
+    width: 100%;
+  }
+
+  /* Copy trading */
+  .copy-traders-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .copy-stats-grid,
+  .copy-highlight-stats {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .copy-trader-header {
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+  }
+
+  .copy-card-actions {
+    flex-direction: column;
+  }
+
+  .copy-card-actions .btn {
+    width: 100%;
+  }
+
+  /* ROI / profit history */
+  .roi-summary-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .roi-table-head,
+  .roi-row {
+    grid-template-columns: 1fr 1fr;
+    gap: 0.35rem 0.75rem;
+    padding: 0.75rem 1rem;
+  }
+
+  .roi-table-head span:nth-child(3),
+  .roi-table-head span:nth-child(4),
+  .roi-row .roi-cell-type,
+  .roi-row .roi-cell-date {
+    display: none;
+  }
+
+  /* Plans use Bootstrap columns — full width on small screens */
+  #plans-container > [class*='col-'] {
+    flex: 0 0 100%;
+    max-width: 100%;
+  }
+
+  /* KYC */
+  .kyc-steps {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .kyc-step {
+    flex-direction: row;
+    text-align: left;
+    gap: 0.75rem;
+  }
+
+  .kyc-upload-zone {
+    padding: 1.5rem 1rem;
+  }
+
+  /* Profile */
+  .prof-form-actions {
+    flex-direction: column;
+  }
+
+  .prof-form-actions .btn {
+    width: 100%;
+  }
+
+  .prof-quick-links {
+    flex-direction: column;
+  }
+
+  .prof-quick-link {
+    width: 100%;
+    justify-content: center;
+  }
+
+  /* Tables — horizontal scroll fallback */
+  .table-portal-wrap {
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    margin: 0 -0.25rem;
+    padding: 0 0.25rem;
+  }
+
+  .table-portal {
+    min-width: 520px;
+  }
+}
+
+@media (max-width: 380px) {
+  .copy-stats-grid,
+  .copy-highlight-stats {
+    grid-template-columns: 1fr;
+  }
+
+  .dash-assets-grid {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .portal-user-btn {
+    max-width: 5.5rem;
+  }
+}
+
+/* Tablet refinements */
+@media (min-width: 576px) and (max-width: 991.98px) {
+  .inv-summary-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .ai-bots-grid {
+    grid-template-columns: repeat(2, 1fr);
+    max-width: none;
+  }
+}
+
+/* Touch targets */
+@media (hover: none) and (pointer: coarse) {
+  .portal-nav-link,
+  .wallet-provider-card,
+  .quick-action-btn,
+  .btn {
+    min-height: 44px;
+  }
+
+  .portal-nav-link {
+    padding-top: 0.75rem;
+    padding-bottom: 0.75rem;
+  }
+}

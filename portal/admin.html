@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Admin | Prime Trade Capitals</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" />
+  <link href="../css/theme.css" rel="stylesheet" />
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" rel="stylesheet" />
+  <script>
+(function(){var k="ptc-theme",s=localStorage.getItem(k),m=window.matchMedia("(prefers-color-scheme: light)").matches,t=s||(m?"light":"dark");document.documentElement.setAttribute("data-theme",t),document.documentElement.style.colorScheme=t})();
+  </script>
+  <link href="../css/portal.css" rel="stylesheet" />
+  <link href="../css/responsive.css" rel="stylesheet" />
+  <link href="../css/premium.css" rel="stylesheet" />
+</head>
+<body class="portal-app portal-admin-page" data-portal-page="admin" data-portal-title="Admin" data-portal-subtitle="Manage users, balances, KYC, and pending transactions">
+  <a href="#main" class="skip-link">Skip to content</a>
+  <div class="portal-app-layout">
+    <div id="portal-sidebar"></div>
+    <div class="portal-content">
+      <div id="portal-topbar"></div>
+      <main class="portal-main admin-main" id="main">
+        <div id="admin-page-alert" class="alert-ptc d-none" role="status"></div>
+        <div id="admin-seed-banner" class="admin-seed-banner portal-card d-none" role="status">
+          <i class="bi bi-info-circle" aria-hidden="true"></i>
+          <div>
+            <strong>Default admin account created</strong>
+            <p class="mb-0">Sign in as <code>admin</code> / <code>admin</code> and change the password under Account Settings when ready.</p>
+          </div>
+        </div>
+
+        <header class="admin-hero">
+          <div>
+            <h2 class="admin-title"><i class="bi bi-shield-lock" aria-hidden="true"></i> Admin Console</h2>
+            <p class="admin-subtitle">Manage client accounts, approve deposits & withdrawals, and update verification status.</p>
+          </div>
+        </header>
+
+        <section class="admin-stats-grid" id="admin-stats" aria-label="Platform statistics"></section>
+
+        <div class="admin-tabs" role="tablist" aria-label="Admin sections">
+          <button type="button" class="admin-tab active" role="tab" aria-selected="true" data-admin-tab="users" id="admin-tab-users">
+            <i class="bi bi-people"></i> Users
+          </button>
+          <button type="button" class="admin-tab" role="tab" aria-selected="false" data-admin-tab="pending" id="admin-tab-pending">
+            <i class="bi bi-hourglass-split"></i> Pending
+            <span class="admin-tab-badge d-none" id="admin-pending-badge">0</span>
+          </button>
+          <button type="button" class="admin-tab" role="tab" aria-selected="false" data-admin-tab="create" id="admin-tab-create">
+            <i class="bi bi-person-plus"></i> Create user
+          </button>
+        </div>
+
+        <section class="admin-panel active" id="admin-panel-users" role="tabpanel" aria-labelledby="admin-tab-users">
+          <div class="portal-card admin-toolbar-card">
+            <div class="admin-toolbar">
+              <div class="admin-search-wrap">
+                <i class="bi bi-search" aria-hidden="true"></i>
+                <input type="search" id="admin-user-search" class="form-control form-control-ptc" placeholder="Search by username or name…" autocomplete="off" />
+              </div>
+              <select id="admin-filter-kyc" class="form-select form-control-ptc admin-filter-select" aria-label="Filter by KYC">
+                <option value="">All KYC</option>
+                <option value="pending">Pending</option>
+                <option value="approved">Approved</option>
+                <option value="rejected">Rejected</option>
+              </select>
+              <select id="admin-filter-role" class="form-select form-control-ptc admin-filter-select" aria-label="Filter by role">
+                <option value="">All roles</option>
+                <option value="user">Users</option>
+                <option value="admin">Admins</option>
+              </select>
+            </div>
+            <div class="admin-table-wrap">
+              <div class="admin-table-head" aria-hidden="true">
+                <span>User</span>
+                <span>Balance</span>
+                <span>KYC</span>
+                <span>Role</span>
+                <span>Joined</span>
+                <span></span>
+              </div>
+              <div class="admin-table-body" id="admin-users-list"></div>
+              <div class="admin-empty d-none" id="admin-users-empty">
+                <i class="bi bi-inbox"></i>
+                <p>No users match your filters.</p>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <section class="admin-panel d-none" id="admin-panel-pending" role="tabpanel" aria-labelledby="admin-tab-pending">
+          <div class="portal-card">
+            <h3 class="admin-section-title">Pending transactions</h3>
+            <p class="admin-section-desc">Approving a deposit credits the user balance. Approving a withdrawal debits their balance.</p>
+            <div class="admin-pending-list" id="admin-pending-list"></div>
+            <div class="admin-empty d-none" id="admin-pending-empty">
+              <i class="bi bi-check2-circle"></i>
+              <p>No pending transactions.</p>
+            </div>
+          </div>
+        </section>
+
+        <section class="admin-panel d-none" id="admin-panel-create" role="tabpanel" aria-labelledby="admin-tab-create">
+          <div class="portal-card admin-create-card">
+            <h3 class="admin-section-title">Create new user</h3>
+            <form id="admin-create-form" class="admin-create-form" novalidate>
+              <div id="admin-create-alert" class="alert-ptc d-none mb-3" role="status"></div>
+              <div class="row g-3">
+                <div class="col-md-6">
+                  <label class="form-label-ptc" for="admin-create-username">Username</label>
+                  <input type="text" id="admin-create-username" name="username" class="form-control form-control-ptc" required minlength="3" />
+                </div>
+                <div class="col-md-6">
+                  <label class="form-label-ptc" for="admin-create-password">Temporary password</label>
+                  <input type="text" id="admin-create-password" name="password" class="form-control form-control-ptc" required minlength="6" value="ChangeMe123" />
+                </div>
+                <div class="col-md-6">
+                  <label class="form-label-ptc" for="admin-create-name">Full name</label>
+                  <input type="text" id="admin-create-name" name="full_name" class="form-control form-control-ptc" />
+                </div>
+                <div class="col-md-6">
+                  <label class="form-label-ptc" for="admin-create-balance">Starting balance (USD)</label>
+                  <input type="number" id="admin-create-balance" name="balance" class="form-control form-control-ptc" min="0" step="0.01" value="0" />
+                </div>
+                <div class="col-md-4">
+                  <label class="form-label-ptc" for="admin-create-kyc">KYC status</label>
+                  <select id="admin-create-kyc" name="kyc_status" class="form-select form-control-ptc">
+                    <option value="pending">Pending</option>
+                    <option value="approved">Approved</option>
+                    <option value="rejected">Rejected</option>
+                  </select>
+                </div>
+                <div class="col-md-4">
+                  <label class="form-label-ptc" for="admin-create-role">Role</label>
+                  <select id="admin-create-role" name="role" class="form-select form-control-ptc">
+                    <option value="user">User</option>
+                    <option value="admin">Admin</option>
+                  </select>
+                </div>
+                <div class="col-md-4">
+                  <label class="form-label-ptc" for="admin-create-account">Account type</label>
+                  <select id="admin-create-account" name="account_type" class="form-select form-control-ptc">
+                    <option value="personal">Personal</option>
+                    <option value="corporate">Corporate</option>
+                  </select>
+                </div>
+              </div>
+              <button type="submit" class="btn btn-gradient mt-3"><i class="bi bi-person-plus"></i> Create user</button>
+            </form>
+          </div>
+        </section>
+      </main>
+      <p class="portal-copyright mb-0">All Rights Reserved © Prime Trade Capitals 2026</p>
+    </div>
+  </div>
+
+  <div class="modal fade" id="admin-user-modal" tabindex="-1" aria-labelledby="admin-user-modal-title" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-scrollable modal-lg modal-dialog-centered">
+      <div class="modal-content admin-modal-content">
+        <div class="modal-header admin-modal-header">
+          <h2 class="modal-title h5" id="admin-user-modal-title">Edit user</h2>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body" id="admin-user-modal-body"></div>
+        <div class="modal-footer admin-modal-footer">
+          <button type="button" class="btn btn-outline-light-ptc" data-bs-dismiss="modal">Close</button>
+          <button type="button" class="btn btn-gradient" id="admin-save-user-btn"><i class="bi bi-check2"></i> Save changes</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="../js/theme.js"></script>
+  <script src="../js/config.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="../js/supabase.js"></script>
+  <script src="../js/auth-store.js"></script>
+  <script src="../js/auth.js"></script>
+  <script src="../js/components.js"></script>
+  <script src="../js/portal-shell.js"></script>
+  <script src="../js/portal.js"></script>
+  <script src="../js/admin-page.js"></script>
+</body>
+</html>

@@ -1,0 +1,12 @@
+{
+  "cleanUrls": true,
+  "rewrites": [
+    { "source": "/portal/profit-history", "destination": "/portal/profit-history.html" },
+    { "source": "/portal/ai-bots", "destination": "/portal/ai-bots.html" },
+    { "source": "/portal/investments", "destination": "/portal/investments.html" },
+    { "source": "/portal/profile", "destination": "/portal/profile.html" },
+    { "source": "/portal/kyc", "destination": "/portal/kyc.html" },
+    { "source": "/portal/wallet", "destination": "/portal/wallet.html" },
+    { "source": "/portal/admin", "destination": "/portal/admin.html" }
+  ]
+}

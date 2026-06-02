@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Copy Trading | Prime Trade Capitals</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" />
+  <link href="../css/theme.css" rel="stylesheet" />
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" rel="stylesheet" />
+  <script>
+(function(){var k="ptc-theme",s=localStorage.getItem(k),m=window.matchMedia("(prefers-color-scheme: light)").matches,t=s||(m?"light":"dark");document.documentElement.setAttribute("data-theme",t),document.documentElement.style.colorScheme=t})();
+  </script>
+  <link href="../css/portal.css" rel="stylesheet" />
+  <link href="../css/responsive.css" rel="stylesheet" />
+  <link href="../css/premium.css" rel="stylesheet" />
+</head>
+<body class="portal-app portal-copy-page" data-portal-page="copy-trading" data-portal-title="Copy Trading" data-portal-subtitle="">
+  <a href="#main" class="skip-link">Skip to content</a>
+  <div class="portal-app-layout">
+    <div id="portal-sidebar"></div>
+    <div class="portal-content">
+      <div id="portal-topbar"></div>
+      <main class="portal-main copy-main" id="main">
+        <header class="copy-hero">
+          <div>
+            <h2 class="copy-title"><i class="bi bi-people" aria-hidden="true"></i> Copy Trading</h2>
+            <p class="copy-subtitle">Choose an expert trader below. Your account will automatically mirror their trades for the copy period — review their profile, strategy, and risk before you invest.</p>
+          </div>
+          <div class="copy-balance-pill">
+            <span class="copy-balance-pill-icon" aria-hidden="true"><i class="bi bi-wallet2"></i></span>
+            <div>
+              <span class="copy-balance-label">Available Balance</span>
+              <span class="copy-balance-value" id="copy-available-balance">$0.00</span>
+            </div>
+          </div>
+        </header>
+
+        <section class="portal-card copy-active-section d-none" id="copy-active-section" aria-label="Traders you are copying">
+          <h3 class="copy-section-title"><i class="bi bi-person-check"></i> Traders You Are Copying</h3>
+          <div class="copy-active-list" id="copy-active-list"></div>
+        </section>
+
+        <section aria-label="Expert traders">
+          <h3 class="copy-section-title">Choose a Trader to Copy</h3>
+          <p class="copy-section-desc">Each card shows who the trader is, what they trade, and their track record. Tap <strong>Copy</strong> to allocate funds to that strategy.</p>
+          <div class="copy-traders-grid" id="copy-traders-grid"></div>
+        </section>
+      </main>
+      <p class="portal-copyright mb-0">All Rights Reserved © Prime Trade Capitals 2026</p>
+    </div>
+  </div>
+  <button type="button" class="portal-chat-fab" aria-label="Chat"><i class="bi bi-chat-dots-fill"></i><span class="chat-badge">1</span></button>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="../js/theme.js"></script>
+  <script src="../js/config.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="../js/supabase.js"></script>
+  <script src="../js/auth-store.js"></script>
+  <script src="../js/auth.js"></script>
+  <script src="../js/components.js"></script>
+  <script src="../js/portal-shell.js"></script>
+  <script src="../js/portal.js"></script>
+  <script src="../js/copy-trading-page.js"></script>
+</body>
+</html>

@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Fund Your Account | Prime Trade Capitals</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" />
+  <link href="../css/theme.css" rel="stylesheet" />
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" rel="stylesheet" />
+  <script>
+(function(){var k="ptc-theme",s=localStorage.getItem(k),m=window.matchMedia("(prefers-color-scheme: light)").matches,t=s||(m?"light":"dark");document.documentElement.setAttribute("data-theme",t),document.documentElement.style.colorScheme=t})();
+  </script>
+  <link href="../css/portal.css" rel="stylesheet" />
+  <link href="../css/responsive.css" rel="stylesheet" />
+  <link href="../css/premium.css" rel="stylesheet" />
+</head>
+<body class="portal-app portal-fund-page" data-portal-page="deposit" data-portal-title="Fund Account" data-portal-subtitle="">
+  <a href="#main" class="skip-link">Skip to content</a>
+  <div class="portal-app-layout">
+    <div id="portal-sidebar"></div>
+    <div class="portal-content">
+      <div id="portal-topbar"></div>
+      <main class="portal-main fund-main" id="main">
+        <header class="fund-hero">
+          <div class="fund-hero-text">
+            <h2 class="fund-title">Fund Your Account</h2>
+            <p class="fund-subtitle">Add funds to your account to start investing or trading.</p>
+          </div>
+          <div class="fund-balance-pill">
+            <span class="fund-balance-pill-label">Current Balance</span>
+            <span class="fund-balance-pill-value" id="fund-current-balance">$0.00</span>
+          </div>
+        </header>
+
+        <section class="portal-card fund-deposit-card" aria-label="Deposit details">
+          <h3 class="fund-card-title">Deposit Details</h3>
+          <form id="deposit-form" class="fund-form">
+            <div id="deposit-form-alert" class="alert-ptc d-none mb-3"></div>
+
+            <label class="form-label-ptc fund-field-label" for="fund-amount">Amount to deposit</label>
+            <div class="fund-amount-wrap">
+              <span class="fund-amount-prefix" aria-hidden="true">$</span>
+              <input
+                type="number"
+                id="fund-amount"
+                name="amount"
+                class="fund-amount-input"
+                min="1"
+                step="0.01"
+                placeholder="0.00"
+                required
+              />
+            </div>
+
+            <input type="hidden" name="payment_method" id="fund-payment-method" value="" />
+            <input type="hidden" name="reference_note" value="" />
+
+            <div class="fund-methods-section">
+              <h4 class="fund-methods-heading">Select Deposit Method</h4>
+              <div class="fund-methods-table" role="table" aria-label="Deposit methods">
+                <div class="fund-methods-head" role="row">
+                  <span role="columnheader">Method</span>
+                  <span role="columnheader">Action</span>
+                </div>
+                <div class="fund-methods-body" id="fund-methods-list" role="rowgroup"></div>
+              </div>
+            </div>
+
+            <button type="submit" class="btn btn-gradient w-100 fund-proceed-btn" id="fund-proceed-btn" disabled>
+              Complete Payment
+            </button>
+
+            <div class="fund-paystack-bar">
+              <i class="bi bi-shield-lock-fill" aria-hidden="true"></i>
+              <span>Powered by Paystack</span>
+            </div>
+          </form>
+        </section>
+
+        <p class="fund-terms-note">By proceeding, you agree to our <a href="../legal/terms.html">terms of service</a>.</p>
+
+        <div class="fund-info-grid">
+          <div class="portal-card fund-info-card">
+            <h3><i class="bi bi-list-ol"></i> Deposit Process</h3>
+            <ol class="fund-steps-list">
+              <li><strong>Select Method</strong><span>Choose your preferred payment option below.</span></li>
+              <li><strong>Enter Amount</strong><span>Type how much you want to deposit in USD.</span></li>
+              <li><strong>Complete Payment</strong><span>Follow the secure checkout instructions.</span></li>
+              <li><strong>Confirmation</strong><span>Funds appear after admin approval.</span></li>
+            </ol>
+          </div>
+
+          <div class="portal-card fund-info-card">
+            <h3><i class="bi bi-shield-check"></i> Security Tips</h3>
+            <ul class="fund-tips-list">
+              <li>Always verify wallet addresses before sending crypto.</li>
+              <li>Use a secure connection — avoid public Wi‑Fi for payments.</li>
+              <li>Double-check the network (ERC20 vs TRC20) for USDT.</li>
+              <li>Never share your account password or 2FA codes.</li>
+            </ul>
+            <div class="fund-support-callout">
+              <i class="bi bi-headset"></i>
+              <span>Need help? <a href="../contact.html">Contact support</a> before sending large deposits.</span>
+            </div>
+          </div>
+
+          <div class="portal-card fund-info-card">
+            <h3><i class="bi bi-pie-chart"></i> Deposit Summary</h3>
+            <div class="fund-summary-row approved">
+              <div class="fund-summary-icon"><i class="bi bi-check-circle-fill"></i></div>
+              <div>
+                <span class="fund-summary-label">Total Deposited</span>
+                <span class="fund-summary-value" id="fund-total-deposited">$0.00</span>
+              </div>
+            </div>
+            <div class="fund-summary-row pending">
+              <div class="fund-summary-icon"><i class="bi bi-clock-fill"></i></div>
+              <div>
+                <span class="fund-summary-label">Pending Deposits</span>
+                <span class="fund-summary-value" id="fund-pending-deposits">$0.00</span>
+              </div>
+            </div>
+            <a href="transactions.html" class="fund-history-link"><i class="bi bi-eye"></i> View Deposit History</a>
+          </div>
+        </div>
+      </main>
+      <p class="portal-copyright mb-0">All Rights Reserved © Prime Trade Capitals 2026</p>
+    </div>
+  </div>
+  <button type="button" class="portal-chat-fab" aria-label="Chat"><i class="bi bi-chat-dots-fill"></i><span class="chat-badge">1</span></button>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="../js/theme.js"></script>
+  <script src="../js/config.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="../js/supabase.js"></script>
+  <script src="../js/auth-store.js"></script>
+  <script src="../js/auth.js"></script>
+  <script src="../js/components.js"></script>
+  <script src="../js/portal-shell.js"></script>
+  <script src="../js/portal.js"></script>
+  <script src="../js/fund-account.js"></script>
+</body>
+</html>

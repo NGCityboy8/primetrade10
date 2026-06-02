@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Dashboard | Prime Trade Capitals</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" />
+  <link href="../css/theme.css" rel="stylesheet" />
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" rel="stylesheet" />
+  <script>
+(function(){var k="ptc-theme",s=localStorage.getItem(k),m=window.matchMedia("(prefers-color-scheme: light)").matches,t=s||(m?"light":"dark");document.documentElement.setAttribute("data-theme",t),document.documentElement.style.colorScheme=t})();
+  </script>
+  <link href="../css/portal.css" rel="stylesheet" />
+  <link href="../css/responsive.css" rel="stylesheet" />
+  <link href="../css/premium.css" rel="stylesheet" />
+</head>
+<body class="portal-app portal-dashboard-page" data-portal-page="dashboard" data-portal-title="Dashboard" data-portal-subtitle="">
+  <a href="#main" class="skip-link">Skip to content</a>
+  <div class="portal-app-layout">
+    <div id="portal-sidebar"></div>
+    <div class="portal-content">
+      <div id="portal-topbar"></div>
+      <main class="portal-main dash-main" id="main">
+        <div id="kyc-banner" class="kyc-status-banner pending dash-kyc-banner d-none"></div>
+
+        <header class="dash-hero">
+          <div class="dash-hero-text">
+            <h2 class="dash-welcome">Welcome back, <span id="dash-display-name">Trader</span>!</h2>
+            <p class="dash-account-type" id="dash-account-type">Personal Trading Account</p>
+          </div>
+          <span class="dash-status-pill" id="dash-account-status">Account Active</span>
+        </header>
+
+        <section class="dash-section dash-overview" aria-label="Financial overview">
+          <div class="dash-balance-card portal-card">
+            <span class="dash-card-label">Account Balance</span>
+            <div class="dash-balance-value" id="dash-balance">$0.00</div>
+            <div class="dash-balance-actions">
+              <a href="deposit.html" class="btn btn-gradient"><i class="bi bi-plus-lg"></i> Deposit</a>
+              <a href="withdraw.html" class="btn btn-outline-light-ptc"><i class="bi bi-arrow-up-right"></i> Withdraw</a>
+            </div>
+          </div>
+          <div class="dash-metrics-grid">
+            <div class="dash-metric-card">
+              <span class="dash-metric-label">Profit</span>
+              <span class="dash-metric-value" id="dash-profit">$0.00</span>
+            </div>
+            <div class="dash-metric-card">
+              <span class="dash-metric-label">Bonus</span>
+              <span class="dash-metric-value" id="dash-bonus">$0.00</span>
+            </div>
+            <div class="dash-metric-card">
+              <span class="dash-metric-label">Deposits</span>
+              <span class="dash-metric-value" id="dash-deposits-total">$0.00</span>
+            </div>
+            <div class="dash-metric-card">
+              <span class="dash-metric-label">Withdrawals</span>
+              <span class="dash-metric-value" id="dash-withdrawals-total">$0.00</span>
+            </div>
+          </div>
+        </section>
+
+        <section class="dash-section" aria-label="Wallet assets">
+          <div class="dash-section-head">
+            <h3>Your Assets</h3>
+            <span class="text-muted-ptc small">Spot balances</span>
+          </div>
+          <div class="dash-assets-grid" id="dash-assets-grid"></div>
+        </section>
+
+        <div class="dash-layout-main">
+          <div class="dash-layout-primary">
+            <section class="dash-section portal-card dash-chart-card" aria-label="Trading analysis">
+              <div class="dash-section-head">
+                <h3>Trading Analysis</h3>
+                <span class="dash-signal-badge" id="dash-signal-strength">Signal Strength: Neutral</span>
+              </div>
+              <div class="tv-widget-wrap dash-tv-chart">
+                <div class="tradingview-widget-container" style="height:100%;width:100%">
+                  <div class="tradingview-widget-container__widget" style="height:100%;width:100%"></div>
+                  <script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-advanced-chart.js" async>
+{
+  "autosize": true,
+  "symbol": "BINANCE:BTCUSDT",
+  "interval": "60",
+  "timezone": "Etc/UTC",
+  "theme": "dark",
+  "style": "1",
+  "locale": "en",
+  "enable_publishing": false,
+  "allow_symbol_change": true,
+  "calendar": false,
+  "support_host": "https://www.tradingview.com"
+}
+                  </script>
+                </div>
+              </div>
+            </section>
+
+            <section class="dash-section portal-card" aria-label="Active investments">
+              <div class="dash-section-head">
+                <h3>Active Investments <span class="text-muted-ptc fw-normal" id="dash-invest-count">(0)</span></h3>
+                <a href="investments.html" class="btn btn-sm btn-outline-light-ptc">View All</a>
+                <a href="plans.html" class="btn btn-sm btn-gradient">Invest</a>
+              </div>
+              <div id="dash-investments" class="dash-invest-empty">
+                <i class="bi bi-briefcase"></i>
+                <p>No active investments</p>
+                <a href="investments.html" class="btn btn-outline-light-ptc btn-sm">My Investments</a>
+              </div>
+            </section>
+
+            <section class="dash-section" aria-label="Market overview">
+              <div class="dash-section-head">
+                <h3>Market Overview</h3>
+                <span class="text-muted-ptc small" id="dash-market-updated">—</span>
+              </div>
+              <div class="dash-market-row" id="dash-market-row"></div>
+            </section>
+          </div>
+
+          <aside class="dash-layout-aside" aria-label="Account summary">
+            <div class="portal-card dash-aside-card">
+              <div class="dash-aside-user">
+                <div class="portal-avatar dash-aside-avatar" id="dash-aside-avatar">—</div>
+                <div>
+                  <div class="dash-aside-name" id="dash-aside-name">—</div>
+                  <div class="text-muted-ptc small">@<span id="dash-aside-username">user</span></div>
+                </div>
+              </div>
+              <div class="dash-aside-balance">
+                <span class="dash-card-label">Balance</span>
+                <span class="dash-aside-balance-val" id="dash-aside-balance">$0.00</span>
+              </div>
+              <div class="dash-aside-actions">
+                <a href="deposit.html" class="btn btn-gradient w-100">Deposit</a>
+                <a href="withdraw.html" class="btn btn-outline-light-ptc w-100">Withdraw</a>
+              </div>
+            </div>
+
+            <div class="portal-card dash-referral-card">
+              <h3>Referral Program</h3>
+              <p class="text-muted-ptc small">Invite friends and earn when they join.</p>
+              <div class="dash-ref-link-row">
+                <input type="text" id="dash-ref-link" readonly class="form-control form-control-ptc" aria-label="Referral link" />
+                <button type="button" class="btn btn-gradient btn-sm" id="dash-copy-ref">Copy</button>
+              </div>
+              <div class="dash-ref-stats">
+                <div>
+                  <span class="dash-metric-label">Total Referrals</span>
+                  <span class="dash-metric-value fs-5" id="dash-referrals">0</span>
+                </div>
+                <div>
+                  <span class="dash-metric-label">Earnings</span>
+                  <span class="dash-metric-value fs-5" id="dash-ref-earnings">$0.00</span>
+                </div>
+              </div>
+              <a href="referrals.html" class="btn btn-outline-light-ptc w-100 btn-sm mt-2">View Referrals</a>
+            </div>
+
+            <div class="portal-card dash-activity-card">
+              <div class="dash-section-head">
+                <h3>Recent Activity</h3>
+                <a href="transactions.html" class="small">All</a>
+              </div>
+              <div id="dash-activity-list" class="dash-activity-list"></div>
+            </div>
+          </aside>
+        </div>
+      </main>
+      <p class="portal-copyright mb-0">All Rights Reserved © Prime Trade Capitals 2026</p>
+    </div>
+  </div>
+  <button type="button" class="portal-chat-fab" aria-label="Chat"><i class="bi bi-chat-dots-fill"></i><span class="chat-badge">1</span></button>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="../js/theme.js"></script>
+  <script src="../js/config.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="../js/supabase.js"></script>
+  <script src="../js/auth-store.js"></script>
+  <script src="../js/auth.js"></script>
+  <script src="../js/components.js"></script>
+  <script src="../js/portal-shell.js"></script>
+  <script src="../js/portal.js"></script>
+  <script src="../js/dashboard.js"></script>
+</body>
+</html>
