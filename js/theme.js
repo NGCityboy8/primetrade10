@@ -1,4 +1,20 @@
 (function () {
+  (function setFavicon() {
+    if (document.querySelector('link[rel="icon"]')) return;
+    const path = window.location.pathname.replace(/\\/g, '/');
+    const inSubfolder = /\/(auth|portal|markets|legal)\//.test(path);
+    const href = `${inSubfolder ? '../' : ''}assets/images/logo.png`;
+    const icon = document.createElement('link');
+    icon.rel = 'icon';
+    icon.type = 'image/png';
+    icon.href = href;
+    document.head.appendChild(icon);
+    const apple = document.createElement('link');
+    apple.rel = 'apple-touch-icon';
+    apple.href = href;
+    document.head.appendChild(apple);
+  })();
+
   (function loadResponsiveStylesheet() {
     if (document.getElementById('ptc-responsive-css')) return;
     const stylesheets = [...document.querySelectorAll('link[rel="stylesheet"][href*="css/"]')];

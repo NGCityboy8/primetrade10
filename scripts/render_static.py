@@ -435,6 +435,8 @@ def shell(title, base, active, body, coingecko=False, tv_tape=False, stocks=Fals
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>{title} | Prime Trade Capitals</title>
+  <link rel="icon" type="image/png" href="{base}assets/images/logo.png" />
+  <link rel="apple-touch-icon" href="{base}assets/images/logo.png" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
   <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" rel="stylesheet" />
