@@ -23,6 +23,10 @@
     btn.addEventListener('click', () => togglePassword(btn));
   });
 
+  const refKey = store()?.REFERRAL_REF_KEY || 'ptc-ref';
+  const refFromUrl = new URLSearchParams(location.search).get('ref');
+  if (refFromUrl) sessionStorage.setItem(refKey, refFromUrl.trim());
+
   const verifyDisplay = document.getElementById('verify-code-display');
   if (verifyDisplay && store()) {
     verifyDisplay.textContent = store().setVerifyCode();
@@ -39,16 +43,21 @@
       return;
     }
     store().markVerified();
-    location.href = auth().authUrl('register.html');
+    const ref = sessionStorage.getItem(refKey);
+    const dest = auth().authUrl('register.html');
+    location.href = ref ? `${dest}?ref=${encodeURIComponent(ref)}` : dest;
   });
 
   if (document.getElementById('register-form') && store() && !store().isVerified()) {
-    location.href = auth().authUrl('verify.html');
+    const ref =
+      sessionStorage.getItem(refKey) || new URLSearchParams(location.search).get('ref');
+    const dest = auth().authUrl('verify.html');
+    location.href = ref ? `${dest}?ref=${encodeURIComponent(ref)}` : dest;
   }
 
-  const refParam = new URLSearchParams(location.search).get('ref');
   const referralInput = document.querySelector('#register-form [name="referral_id"]');
-  if (refParam && referralInput) referralInput.value = refParam;
+  const savedRef = sessionStorage.getItem(refKey);
+  if (referralInput && savedRef) referralInput.value = savedRef;
 
   document.getElementById('login-form')?.addEventListener('submit', async (e) => {
     e.preventDefault();
@@ -92,6 +101,7 @@
         account_type: form.account_type.value,
         referral_id: form.referral_id.value,
       });
+      sessionStorage.removeItem(refKey);
       location.href = auth().portalUrl('dashboard.html');
     } catch (err) {
       showAlert('register-alert', err.message || 'Registration failed', 'danger');

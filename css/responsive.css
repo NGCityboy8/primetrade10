@@ -246,12 +246,18 @@ body.portal-nav-open .portal-sidebar-overlay {
   }
 
   .portal-user-btn {
-    padding: 0.4rem 0.65rem;
+    padding: 0.35rem 0.55rem 0.35rem 0.35rem;
     font-size: 0.85rem;
-    max-width: 7rem;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    white-space: nowrap;
+    max-width: 9rem;
+  }
+
+  .portal-user-label {
+    max-width: 5rem;
+  }
+
+  .portal-topbar .dropdown-menu-ptc,
+  .portal-topbar .portal-user-menu {
+    min-width: 210px;
   }
 
   .portal-main {
@@ -269,6 +275,32 @@ body.portal-nav-open .portal-sidebar-overlay {
     width: 50px;
     height: 50px;
     font-size: 1.35rem;
+  }
+
+  .portal-chat-panel {
+    padding: 0.5rem 0.5rem 4.5rem;
+    align-items: stretch;
+  }
+
+  .portal-chat-card {
+    width: 100%;
+    max-height: calc(100vh - 5rem);
+    border-radius: 14px 14px 0 0;
+  }
+
+  .portal-chat-panel--admin .portal-chat-card {
+    width: 100%;
+  }
+
+  .portal-chat-layout {
+    flex-direction: column;
+  }
+
+  .portal-chat-threads {
+    width: 100%;
+    max-height: 140px;
+    border-right: none;
+    border-bottom: 1px solid var(--ptc-border);
   }
 
   body.portal-nav-open {

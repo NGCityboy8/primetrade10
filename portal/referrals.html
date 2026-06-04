@@ -25,6 +25,7 @@
     <div class="portal-content">
       <div id="portal-topbar"></div>
       <main class="portal-main" id="main">
+        <div id="referrals-page-alert" class="alert-ptc d-none" role="status"></div>
         <div class="row g-4">
           <div class="col-lg-8">
             <div class="portal-card mb-4">
@@ -33,7 +34,9 @@
               <div class="referral-link-row">
                 <input type="text" id="referral-link-input" readonly aria-label="Referral link" />
                 <button type="button" class="btn btn-gradient" id="copy-referral-link">Copy</button>
+                <button type="button" class="btn btn-outline-light-ptc" id="share-referral-link" title="Share link"><i class="bi bi-share"></i></button>
               </div>
+              <p class="text-muted-ptc small mb-0 mt-2">Earn <strong id="ref-commission-rate">5%</strong> on each referred client's approved deposit.</p>
               <div class="referral-meta-grid">
                 <div class="referral-meta-box">
                   <div class="label">Your Referral ID</div>
@@ -120,5 +123,6 @@
   <script src="../js/components.js"></script>
   <script src="../js/portal-shell.js"></script>
   <script src="../js/portal.js"></script>
+  <script src="../js/referrals-page.js"></script>
 </body>
 </html>

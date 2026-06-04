@@ -166,6 +166,10 @@ body.portal-app #site-footer {
   background: var(--portal-topbar-bg, rgba(13, 17, 23, 0.85));
   backdrop-filter: blur(10px);
   flex-wrap: wrap;
+  position: sticky;
+  top: 0;
+  z-index: 1020;
+  isolation: isolate;
 }
 
 .portal-page-title {
@@ -185,6 +189,12 @@ body.portal-app #site-footer {
   display: flex;
   align-items: center;
   gap: 0.75rem;
+  position: relative;
+  z-index: 1;
+}
+
+.portal-user-dropdown {
+  position: relative;
 }
 
 .portal-theme-btn {
@@ -202,20 +212,117 @@ body.portal-app #site-footer {
   border: 1px solid var(--ptc-border);
   color: var(--ptc-text);
   font-weight: 600;
-  padding: 0.45rem 1rem;
+  padding: 0.35rem 0.85rem 0.35rem 0.4rem;
   border-radius: 10px;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  max-width: 12rem;
+}
+
+.portal-user-btn.dropdown-toggle::after {
+  margin-left: 0.1rem;
+  flex-shrink: 0;
+}
+
+.portal-user-avatar {
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #1e88e5, #0d47a1);
+  color: #fff;
+  font-size: 0.72rem;
+  font-weight: 700;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  text-transform: lowercase;
+  letter-spacing: 0.02em;
+}
+
+.portal-user-label {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  min-width: 0;
+}
+
+.portal-topbar .dropdown-menu-ptc,
+.portal-topbar .portal-user-menu {
+  --bs-dropdown-zindex: 1060;
+  z-index: 1060 !important;
+  min-width: 240px;
+  padding: 0.5rem;
+  margin-top: 0.5rem !important;
+  background: var(--portal-dropdown-bg, #131820);
+  border: 1px solid var(--ptc-border);
+  border-radius: 12px;
+  box-shadow: 0 16px 48px rgba(0, 0, 0, 0.55);
+  backdrop-filter: none;
+  -webkit-backdrop-filter: none;
+}
+
+.portal-user-menu-header {
+  padding: 0.65rem 0.85rem 0.5rem;
+  list-style: none;
+  pointer-events: none;
+}
+
+.portal-user-menu-name {
+  display: block;
+  font-weight: 700;
+  font-size: 0.9rem;
+  color: var(--ptc-text);
+  line-height: 1.35;
+}
+
+.portal-user-menu-meta {
+  display: block;
+  font-size: 0.75rem;
+  color: var(--ptc-muted);
+  margin-top: 0.2rem;
 }
 
 .dropdown-menu-ptc {
-  background: var(--stat-card-bg);
+  background: var(--portal-dropdown-bg, #131820);
   border: 1px solid var(--ptc-border);
   border-radius: 10px;
   padding: 0.35rem;
 }
 
+.portal-topbar .dropdown-menu-ptc .dropdown-item {
+  color: var(--ptc-text);
+  border-radius: 8px;
+  padding: 0.55rem 0.85rem;
+  font-size: 0.875rem;
+  display: flex;
+  align-items: center;
+  gap: 0.55rem;
+}
+
+.portal-topbar .dropdown-menu-ptc .dropdown-item i {
+  width: 1.125rem;
+  text-align: center;
+  flex-shrink: 0;
+  opacity: 0.9;
+}
+
 .dropdown-menu-ptc .dropdown-item {
   color: var(--ptc-text);
   border-radius: 6px;
+}
+
+.portal-topbar .dropdown-menu-ptc .dropdown-item:hover,
+.portal-topbar .dropdown-menu-ptc .dropdown-item:focus {
+  background: rgba(30, 136, 229, 0.14);
+  color: var(--ptc-text);
+}
+
+.portal-topbar .dropdown-menu-ptc .dropdown-item.text-danger:hover,
+.portal-topbar .dropdown-menu-ptc .dropdown-item.text-danger:focus {
+  background: rgba(244, 67, 54, 0.14);
+  color: #f44336;
 }
 
 .dropdown-menu-ptc .dropdown-item:hover {
@@ -225,6 +332,8 @@ body.portal-app #site-footer {
 
 .dropdown-menu-ptc .dropdown-divider {
   border-color: var(--ptc-border);
+  margin: 0.35rem 0;
+  opacity: 1;
 }
 
 .portal-main {
@@ -316,10 +425,18 @@ body.portal-app #site-footer {
 .referral-link-row {
   display: flex;
   gap: 0.5rem;
+  flex-wrap: wrap;
+  align-items: stretch;
+}
+
+.referral-link-row .btn-outline-light-ptc {
+  flex-shrink: 0;
+  min-width: 44px;
 }
 
 .referral-link-row input {
   flex: 1;
+  min-width: 12rem;
   background: var(--ptc-card);
   border: 1px solid var(--ptc-border);
   border-radius: 10px;
@@ -438,7 +555,7 @@ body.portal-app #site-footer {
   position: fixed;
   right: 1.5rem;
   bottom: 1.5rem;
-  z-index: 100;
+  z-index: 1040;
   width: 56px;
   height: 56px;
   border-radius: 50%;
@@ -450,6 +567,7 @@ body.portal-app #site-footer {
   display: flex;
   align-items: center;
   justify-content: center;
+  cursor: pointer;
 }
 
 .portal-chat-fab .chat-badge {
@@ -460,12 +578,246 @@ body.portal-app #site-footer {
   color: #fff;
   font-size: 0.65rem;
   font-weight: 700;
-  width: 18px;
+  min-width: 18px;
   height: 18px;
-  border-radius: 50%;
+  padding: 0 4px;
+  border-radius: 999px;
   display: flex;
   align-items: center;
   justify-content: center;
+}
+
+body.portal-chat-open {
+  overflow: hidden;
+}
+
+.portal-chat-panel {
+  position: fixed;
+  inset: 0;
+  z-index: 1060;
+  display: flex;
+  align-items: flex-end;
+  justify-content: flex-end;
+  padding: 1rem 1.5rem 5.5rem;
+  pointer-events: none;
+}
+
+.portal-chat-backdrop {
+  position: absolute;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.45);
+  pointer-events: auto;
+}
+
+.portal-chat-card {
+  position: relative;
+  width: min(420px, calc(100vw - 2rem));
+  max-height: min(560px, calc(100vh - 7rem));
+  display: flex;
+  flex-direction: column;
+  background: var(--portal-dropdown-bg, #131820);
+  border: 1px solid var(--ptc-border);
+  border-radius: 16px;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
+  pointer-events: auto;
+  overflow: hidden;
+}
+
+.portal-chat-panel--admin .portal-chat-card {
+  width: min(720px, calc(100vw - 2rem));
+}
+
+.portal-chat-header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 0.75rem;
+  padding: 1rem 1.1rem 0.75rem;
+  border-bottom: 1px solid var(--ptc-border);
+}
+
+.portal-chat-title {
+  margin: 0;
+  font-size: 1.05rem;
+  font-weight: 700;
+  color: var(--ptc-text);
+}
+
+.portal-chat-subtitle {
+  margin: 0.2rem 0 0;
+  font-size: 0.78rem;
+  color: var(--ptc-muted);
+}
+
+.portal-chat-layout {
+  display: flex;
+  min-height: 0;
+  flex: 1;
+}
+
+.portal-chat-threads {
+  width: 220px;
+  flex-shrink: 0;
+  border-right: 1px solid var(--ptc-border);
+  display: flex;
+  flex-direction: column;
+  min-height: 280px;
+}
+
+.portal-chat-threads-head {
+  padding: 0.65rem 0.85rem;
+  font-size: 0.7rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--ptc-muted);
+  border-bottom: 1px solid var(--ptc-border);
+}
+
+.portal-chat-threads-list {
+  overflow-y: auto;
+  flex: 1;
+}
+
+.portal-chat-threads-empty {
+  padding: 1rem;
+  font-size: 0.85rem;
+  color: var(--ptc-muted);
+  margin: 0;
+}
+
+.portal-chat-thread {
+  display: block;
+  width: 100%;
+  text-align: left;
+  border: none;
+  border-bottom: 1px solid var(--ptc-border);
+  background: transparent;
+  padding: 0.7rem 0.85rem;
+  color: var(--ptc-text);
+  position: relative;
+  cursor: pointer;
+}
+
+.portal-chat-thread:hover,
+.portal-chat-thread.active {
+  background: rgba(30, 136, 229, 0.1);
+}
+
+.portal-chat-thread-name {
+  display: block;
+  font-weight: 600;
+  font-size: 0.85rem;
+}
+
+.portal-chat-thread-user,
+.portal-chat-thread-preview {
+  display: block;
+  font-size: 0.72rem;
+  color: var(--ptc-muted);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.portal-chat-thread-badge {
+  position: absolute;
+  top: 0.55rem;
+  right: 0.55rem;
+  background: #f44336;
+  color: #fff;
+  font-size: 0.65rem;
+  font-weight: 700;
+  min-width: 18px;
+  height: 18px;
+  border-radius: 999px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0 4px;
+}
+
+.portal-chat-main {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  min-height: 320px;
+}
+
+.portal-chat-messages {
+  flex: 1;
+  overflow-y: auto;
+  padding: 1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.65rem;
+}
+
+.portal-chat-empty {
+  margin: auto 0;
+  text-align: center;
+  color: var(--ptc-muted);
+  font-size: 0.88rem;
+}
+
+.portal-chat-msg {
+  max-width: 88%;
+  display: flex;
+  flex-direction: column;
+  gap: 0.2rem;
+}
+
+.portal-chat-msg--mine {
+  align-self: flex-end;
+  align-items: flex-end;
+}
+
+.portal-chat-msg--theirs {
+  align-self: flex-start;
+  align-items: flex-start;
+}
+
+.portal-chat-msg-body {
+  padding: 0.55rem 0.75rem;
+  border-radius: 12px;
+  font-size: 0.88rem;
+  line-height: 1.45;
+  word-break: break-word;
+}
+
+.portal-chat-msg--mine .portal-chat-msg-body {
+  background: linear-gradient(135deg, #1e88e5, #1565c0);
+  color: #fff;
+  border-bottom-right-radius: 4px;
+}
+
+.portal-chat-msg--theirs .portal-chat-msg-body {
+  background: var(--stat-card-bg, rgba(255, 255, 255, 0.06));
+  border: 1px solid var(--ptc-border);
+  color: var(--ptc-text);
+  border-bottom-left-radius: 4px;
+}
+
+.portal-chat-msg-time {
+  font-size: 0.68rem;
+  color: var(--ptc-muted);
+}
+
+.portal-chat-compose {
+  display: flex;
+  gap: 0.5rem;
+  padding: 0.75rem;
+  border-top: 1px solid var(--ptc-border);
+}
+
+.portal-chat-compose .form-control {
+  flex: 1;
+}
+
+.portal-chat-compose .btn {
+  flex-shrink: 0;
+  min-width: 44px;
 }
 
 .portal-copyright {
@@ -480,7 +832,12 @@ body.portal-app #site-footer {
   --portal-app-bg: #f0f4f8;
   --portal-sidebar-bg: linear-gradient(180deg, #ffffff 0%, #f8fafc 100%);
   --portal-topbar-bg: rgba(255, 255, 255, 0.94);
+  --portal-dropdown-bg: #ffffff;
   --stat-card-bg: #ffffff;
+}
+
+[data-theme='dark'] body.portal-app {
+  --portal-dropdown-bg: #131820;
 }
 
 [data-theme='light'] .fund-balance-pill-value {

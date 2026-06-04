@@ -82,8 +82,13 @@
     setText('portal-sidebar-username', displayName);
     setText('portal-sidebar-balance', balance);
     setText('portal-topbar-username', username);
+    setText('portal-topbar-display-name', displayName);
+    setText('portal-topbar-meta', `@${username}`);
+    const avatarInitials = initials(displayName, username);
     const avatar = document.getElementById('portal-avatar');
-    if (avatar) avatar.textContent = initials(displayName, username);
+    if (avatar) avatar.textContent = avatarInitials;
+    const topbarAvatar = document.getElementById('portal-topbar-avatar');
+    if (topbarAvatar) topbarAvatar.textContent = avatarInitials;
 
     const title = document.body.dataset.portalTitle;
     const subtitle = document.body.dataset.portalSubtitle;
@@ -98,5 +103,42 @@
     });
   }
 
-  window.PrimeTradePortalShell = { populateShell, initMobileNav };
+  function portalScriptBase() {
+    const path = location.pathname.replace(/\\/g, '/');
+    return path.includes('/portal/') ? '..' : '.';
+  }
+
+  function loadScript(src) {
+    return new Promise((resolve, reject) => {
+      if (document.querySelector(`script[data-ptc-src="${src}"]`)) {
+        resolve();
+        return;
+      }
+      const el = document.createElement('script');
+      el.src = src;
+      el.dataset.ptcSrc = src;
+      el.onload = () => resolve();
+      el.onerror = () => reject(new Error(`Failed to load ${src}`));
+      document.body.appendChild(el);
+    });
+  }
+
+  function ensurePortalChatScripts() {
+    if (!document.body.classList.contains('portal-app')) return;
+    if (window.PrimeTradePortalChat) return;
+    const base = portalScriptBase();
+    loadScript(`${base}/js/chat-store.js`)
+      .then(() => loadScript(`${base}/js/portal-chat.js`))
+      .catch(() => {});
+  }
+
+  if (document.body.classList.contains('portal-app')) {
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', ensurePortalChatScripts);
+    } else {
+      ensurePortalChatScripts();
+    }
+  }
+
+  window.PrimeTradePortalShell = { populateShell, initMobileNav, ensurePortalChatScripts };
 })();

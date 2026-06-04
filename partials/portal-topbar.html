@@ -11,15 +11,30 @@
       <i class="bi bi-sun-fill theme-icon-light" aria-hidden="true"></i>
       <i class="bi bi-moon-fill theme-icon-dark" aria-hidden="true"></i>
     </button>
-    <div class="dropdown">
-      <button class="btn portal-user-btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" id="portal-topbar-username">
-        User
+    <div class="dropdown portal-user-dropdown">
+      <button
+        class="btn portal-user-btn dropdown-toggle"
+        type="button"
+        data-bs-toggle="dropdown"
+        data-bs-auto-close="true"
+        aria-expanded="false"
+        aria-haspopup="true"
+        aria-controls="portal-user-menu"
+        id="portal-user-menu-btn"
+      >
+        <span class="portal-user-avatar" id="portal-topbar-avatar" aria-hidden="true">pt</span>
+        <span class="portal-user-label" id="portal-topbar-username">User</span>
       </button>
-      <ul class="dropdown-menu dropdown-menu-end dropdown-menu-ptc">
-        <li><a class="dropdown-item" href="profile.html"><i class="bi bi-gear me-2"></i>Account Settings</a></li>
-        <li><a class="dropdown-item" href="referrals.html"><i class="bi bi-share me-2"></i>Referrals</a></li>
-        <li><hr class="dropdown-divider" /></li>
-        <li><button type="button" class="dropdown-item text-danger" id="portal-logout-btn"><i class="bi bi-box-arrow-right me-2"></i>Logout</button></li>
+      <ul class="dropdown-menu dropdown-menu-end dropdown-menu-ptc portal-user-menu" id="portal-user-menu" role="menu" aria-labelledby="portal-user-menu-btn">
+        <li class="portal-user-menu-header" role="presentation">
+          <span class="portal-user-menu-name" id="portal-topbar-display-name">User</span>
+          <span class="portal-user-menu-meta" id="portal-topbar-meta">@user</span>
+        </li>
+        <li role="presentation"><hr class="dropdown-divider" /></li>
+        <li role="none"><a class="dropdown-item" href="profile.html" role="menuitem"><i class="bi bi-gear" aria-hidden="true"></i>Account Settings</a></li>
+        <li role="none"><a class="dropdown-item" href="referrals.html" role="menuitem"><i class="bi bi-share" aria-hidden="true"></i>Referrals</a></li>
+        <li role="presentation"><hr class="dropdown-divider" /></li>
+        <li role="none"><button type="button" class="dropdown-item text-danger" id="portal-logout-btn" role="menuitem"><i class="bi bi-box-arrow-right" aria-hidden="true"></i>Logout</button></li>
       </ul>
     </div>
   </div>

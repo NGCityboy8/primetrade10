@@ -600,6 +600,9 @@
     };
 
     updateUser(targetUserId, { transactions, balance });
+    if (status === 'approved' && tx.type === 'deposit') {
+      creditReferralCommission(user, amount);
+    }
     return transactions[idx];
   }
 
@@ -674,38 +677,68 @@
     };
   }
 
-  function buildReferralLink(username) {
-    const base = window.PrimeTradeComponents?.getBasePath?.() || '.';
-    const origin = location.origin;
-    const path = location.pathname.replace(/\\/g, '/');
-    const portalIdx = path.indexOf('/portal/');
-    const root =
-      portalIdx >= 0
-        ? `${origin}${path.slice(0, portalIdx)}`
-        : origin + (base === '.' ? '' : base.replace(/^\./, ''));
-    return `${root}/auth/verify.html?ref=${encodeURIComponent(username)}`;
+  const REFERRAL_REF_KEY = 'ptc-ref';
+
+  function referralCommissionRate() {
+    const rate = Number(window.PRIME_TRADE_CONFIG?.REFERRAL_COMMISSION_RATE);
+    return Number.isFinite(rate) && rate > 0 && rate <= 1 ? rate : 0.05;
   }
 
-  function getReferralInfo(userId) {
+  function buildReferralLink(username) {
+    const code = encodeURIComponent(username);
+    if (window.PrimeTradeAuth?.authUrl) {
+      return `${window.PrimeTradeAuth.authUrl('verify.html')}?ref=${code}`;
+    }
+    const path = location.pathname.replace(/\\/g, '/');
+    const authIdx = path.indexOf('/auth/');
+    const portalIdx = path.indexOf('/portal/');
+    const cut = authIdx >= 0 ? authIdx : portalIdx >= 0 ? portalIdx : -1;
+    const root = cut >= 0 ? `${location.origin}${path.slice(0, cut)}` : location.origin;
+    return `${root}/auth/verify.html?ref=${code}`;
+  }
+
+  function userWasReferredBy(referredUser, sponsorUsername) {
+    const sponsor = sponsorUsername.toLowerCase();
+    const bySponsor = referredUser.sponsor_username?.toLowerCase() === sponsor;
+    const byRefId = referredUser.referral_id?.toLowerCase() === sponsor;
+    return bySponsor || byRefId;
+  }
+
+  function creditReferralCommission(referredUser, depositAmount) {
+    const sponsorName = referredUser.sponsor_username;
+    if (!sponsorName || !(depositAmount > 0)) return;
+    const sponsor = findByUsername(sponsorName);
+    if (!sponsor) return;
+    const commission =
+      Math.round(depositAmount * referralCommissionRate() * 100) / 100;
+    if (commission <= 0) return;
+    updateUser(sponsor.id, {
+      referral_earnings: (parseFloat(sponsor.referral_earnings) || 0) + commission,
+    });
+  }
+
+  async function getReferralInfo(userId) {
+    await hydrateUsersFromSupabase();
     const user = findById(userId);
     if (!user) return null;
-    const referred = readUsers().filter(
-      (u) => u.sponsor_username?.toLowerCase() === user.username.toLowerCase()
-    );
+    const referred = readUsers().filter((u) => userWasReferredBy(u, user.username));
     return {
       referral_id: user.username,
       referral_link: buildReferralLink(user.username),
       sponsor_username: user.sponsor_username || null,
       total_referrals: referred.length,
       referral_earnings: user.referral_earnings || 0,
-      referrals: referred.map((r) => ({
-        full_name: r.full_name || r.username,
-        username: r.username,
-        level: 1,
-        parent: user.username,
-        status: r.kyc_status === 'approved' ? 'Active' : 'Pending',
-        created_at: r.created_at,
-      })),
+      commission_rate: referralCommissionRate(),
+      referrals: referred
+        .sort((a, b) => new Date(b.created_at) - new Date(a.created_at))
+        .map((r) => ({
+          full_name: r.full_name || r.username,
+          username: r.username,
+          level: 1,
+          parent: user.username,
+          status: r.kyc_status === 'approved' ? 'Active' : 'Pending',
+          created_at: r.created_at,
+        })),
     };
   }
 
@@ -743,8 +776,12 @@
     let sponsor_username = null;
     const refCode = payload.referral_id?.trim();
     if (refCode) {
+      if (refCode.toLowerCase() === username.toLowerCase()) {
+        throw new Error('You cannot use your own referral ID.');
+      }
       const sponsor = findByUsername(refCode);
-      if (sponsor) sponsor_username = sponsor.username;
+      if (!sponsor) throw new Error('Referral ID not found. Check the code or leave it blank.');
+      sponsor_username = sponsor.username;
     }
     const user = {
       id: newId(),
@@ -1118,8 +1155,11 @@
     setPrimaryWallet,
     findByUsername,
     findById,
+    hydrateUsersFromSupabase,
     getReferralInfo,
     buildReferralLink,
+    REFERRAL_REF_KEY,
+    referralCommissionRate,
     hasSubtleCrypto,
     ensureDefaultAdmin,
     isAdmin,

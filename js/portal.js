@@ -104,7 +104,7 @@
 
     let refInfo = null;
     if (window.PrimeTradeAuth?.useLocalAuth && localStore()) {
-      refInfo = localStore().getReferralInfo(profile.id);
+      refInfo = await localStore().getReferralInfo(profile.id);
     }
     setText('dash-referrals', String(refInfo?.total_referrals ?? 0));
     setText('dash-ref-earnings', formatMoney(refInfo?.referral_earnings ?? 0));
@@ -190,54 +190,6 @@
     }
 
     dash?.loadMarketOverview?.();
-  }
-
-  async function loadReferrals() {
-    await window.PrimeTradePortalShell?.populateShell();
-    const session = await window.PrimeTradeAuth?.getSession();
-    if (!session || !localStore()) return;
-    const info = localStore().getReferralInfo(session.user.id);
-    if (!info) return;
-
-    const linkInput = document.getElementById('referral-link-input');
-    if (linkInput) linkInput.value = info.referral_link;
-
-    const setText = (id, val) => {
-      const node = document.getElementById(id);
-      if (node) node.textContent = val;
-    };
-
-    setText('referral-id-display', info.referral_id);
-    setText('referral-sponsor', info.sponsor_username || '—');
-    setText('ref-total-count', `${info.total_referrals} Users`);
-    setText('ref-total-earnings', formatMoney(info.referral_earnings));
-
-    const tbody = document.getElementById('referrals-table-body');
-    if (tbody) {
-      if (!info.referrals.length) {
-        tbody.innerHTML =
-          '<tr><td colspan="5" class="text-muted-ptc">No referrals yet.</td></tr>';
-      } else {
-        tbody.innerHTML = info.referrals
-          .map(
-            (r) => `<tr>
-            <td>${r.full_name}</td>
-            <td>${r.level}</td>
-            <td>${r.parent}</td>
-            <td>${r.status}</td>
-            <td>${new Date(r.created_at).toLocaleDateString()}</td>
-          </tr>`
-          )
-          .join('');
-      }
-    }
-
-    document.getElementById('copy-referral-link')?.addEventListener('click', (e) => {
-      copyText(info.referral_link, e.currentTarget);
-    });
-    document.getElementById('copy-referral-id')?.addEventListener('click', () => {
-      copyText(info.referral_id);
-    });
   }
 
   async function loadPlans() {
@@ -426,7 +378,6 @@
     if (page === 'withdraw') await window.PrimeTradeWithdraw?.initWithdrawPage?.();
     if (page === 'stocks') await window.PrimeTradeStocks?.initStocksPage?.();
     if (page === 'copy-trading') await window.PrimeTradeCopyTrading?.initCopyTradingPage?.();
-    if (page === 'referrals') await loadReferrals();
     if (page === 'plans') await loadPlans();
     if (page === 'transactions') await loadTransactions();
   }
